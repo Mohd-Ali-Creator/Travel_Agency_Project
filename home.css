@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+}
+
+header.hero {
+    background: url('hero.jpg') no-repeat center center/cover;
+    color: rgb(5, 4, 87);
+    text-align: center;
+    padding: 100px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.hero-content h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.service, .destination, .testimonial {
+    margin: 20px;
+    display: inline-block;
+    width: 300px;
+}
+
+.destination img, .service img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 36px;
+    }
+    .hero-content p {
+        font-size: 16px;
+    }
+    .btn {
+        font-size: 16px;
+    }
+    .service, .destination, .testimonial {
+        width: 100%;
+    }
+}

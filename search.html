@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search travel destinations by country.">
+    <title>Travel Country Search</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar input {
+            padding: 0.75rem;
+            font-size: 1rem;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .search-results li {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text"  placeholder="Search for a country...">
+           
+        </div>
+        <ul class="search-results" id="country-list">
+            <li>Australia</li>
+            <li>Brazil</li>
+            <li>Canada</li>
+            <li>China</li>
+            <li>France</li>
+            <li>Germany</li>
+            <li>India</li>
+            <li>Italy</li>
+            <li>Japan</li>
+            <li>Kenya</li>
+            <li>Mexico</li>
+            <li>New Zealand</li>
+            <li>Russia</li>
+            <li>South Africa</li>
+            <li>Spain</li>
+            <li>United Kingdom</li>
+            <li>United States</li>
+            <li>Saudi Arabia</li>
+            <li>Dubai</li>
+            <li>Qatar</li>
+        </ul>
+    </div>
+
+    <script>
+        function filterCountries() {
+            let input = document.getElementById('search-input');
+            let filter = input.value.toLowerCase();
+            let ul = document.getElementById('country-list');
+            let li = ul.getElementsByTagName('li');
+
+            for (let i = 0; i < li.length; i++) {
+                let txtValue = li[i].textContent || li[i].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

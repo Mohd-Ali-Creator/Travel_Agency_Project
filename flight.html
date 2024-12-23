@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Booking - AL-ALI INTERNATIONAL TOUR AND TRAVEL</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: url('https://www.shipquantum.com/GlobalShippingCompany/AirFreightServices/AirDeliveryServices.png') no-repeat center center/cover;
+
+      background-color: #004d99;
+      color: rgb(2, 3, 18);
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      padding: 10px 0;
+    }
+
+    .navbar a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .search-section {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+      background-color: #fff;
+    }
+
+    .search-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .search-box input, .search-box select {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .search-box button {
+      background-color: #004d99;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background-color: #003366;
+    }
+
+    .results-section {
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .result {
+      background-color: #fff;
+      padding: 20px;
+      margin: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 280px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .result:hover {
+      transform: scale(1.05);
+    }
+
+    .result img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .footer {
+      background-color: #004d99;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0,0,0);
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <h1>AL-ALI INTERNATIONAL TOUR AND TRAVEL</h1>
+    <p>Your gateway to a world of travel experiences</p>
+  </header>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Flight Search</a>
+    <a href="#" onclick="openLoginModal()">Login</a>
+    <a href="#" onclick="openRegisterModal()">Register</a>
+  </div>
+
+  <!-- Flight Search Section -->
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="departure" placeholder="Departure City" required>
+      <input type="text" id="destination" placeholder="Destination City" required>
+      <input type="date" id="departureDate" required>
+      <select id="class" required>
+        <option value="" disabled selected>Class</option>
+        <option value="economy">Economy</option>
+        <option value="business">Business</option>
+        <option value="first">First Class</option>
+      </select>
+      <button onclick="searchFlights()">Search Flights</button>
+    </div>
+  </div>
+
+  <!-- Flight Results Section -->
+  <div class="results-section" id="results">
+    <!-- Results will appear here dynamically -->
+  </div>
+
+  <!-- Payment Modal (Mock) -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePaymentModal()">&times;</span>
+      <h2>Payment</h2>
+      <p>Please provide payment details to book your flight.</p>
+      <input type="text" placeholder="Credit Card Number" required>
+      <button onclick="completeBooking()">Pay Now</button>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>&copy; 2024 AL-ALI INTERNATIONAL TOUR AND TRAVEL. All Rights Reserved.</p>
+  </div>
+
+  <script>
+    // Sample flight data (Simulated API response)
+    const flightsData = [
+      { id: 1, departure: 'New York', destination: 'London', date: '2024-12-25', class: 'economy', price: 500, image: 'https://via.placeholder.com/280x150/ff7f7f/333333?text=London' },
+      { id: 2, departure: 'Los Angeles', destination: 'Paris', date: '2024-12-28', class: 'business', price: 1500, image: 'https://via.placeholder.com/280x150/ffcc00/333333?text=Paris' },
+      { id: 3, departure: 'Dubai', destination: 'Sydney', date: '2024-12-30', class: 'first', price: 3000, image: 'https://via.placeholder.com/280x150/4e73df/333333?text=Sydney' },
+      { id: 4, departure: 'Chicago', destination: 'Tokyo', date: '2024-12-26', class: 'economy', price: 600, image: 'https://via.placeholder.com/280x150/6c757d/333333?text=Tokyo' }
+    ];
+
+    // Function to search flights based on input
+    function searchFlights() {
+      const departureCity = document.getElementById('departure').value;
+      const destinationCity = document.getElementById('destination').value;
+      const departureDate = document.getElementById('departureDate').value;
+      const classType = document.getElementById('class').value;
+
+      const filteredFlights = flightsData.filter(flight => {
+        return (
+          flight.departure.toLowerCase().includes(departureCity.toLowerCase()) &&
+          flight.destination.toLowerCase().includes(destinationCity.toLowerCase()) &&
+          flight.date === departureDate &&
+          flight.class.toLowerCase().includes(classType.toLowerCase())
+        );
+      });
+
+      // Display the results
+      displayResults(filteredFlights);
+    }
+
+    // Function to display flight search results
+    function displayResults(flights) {
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = ''; // Clear previous results
+
+      if (flights.length > 0) {
+        flights.forEach(flight => {
+          const flightDiv = document.createElement('div');
+          flightDiv.classList.add('result');
+          flightDiv.innerHTML = `
+            <img src="${flight.image}" alt="${flight.destination}">
+            <h3>Flight from ${flight.departure} to ${flight.destination}</h3>
+            <p><strong>Date:</strong> ${flight.date}</p>
+            <p><strong>Class:</strong> ${flight.class.charAt(0).toUpperCase() + flight.class.slice(1)}</p>
+            <p><strong>Price:</strong> $${flight.price}</p>
+            <button onclick="openPaymentModal()">Book Now</button>
+          `;
+          resultsContainer.appendChild(flightDiv);
+        });
+      } else {
+        resultsContainer.innerHTML = '<p>No flights found matching your search.</p>';
+      }
+    }
+
+    // Open the payment modal
+    function openPaymentModal() {
+      document.getElementById('paymentModal').style.display = 'block';
+    }
+
+    // Close the payment modal
+    function closePaymentModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    // Complete the booking (mock)
+    function completeBooking() {
+      alert('Payment successful! Your flight is booked.');
+      closePaymentModal();
+    }
+
+    // Open login modal
+    function openLoginModal() {
+      alert('Login functionality coming soon!');
+    }
+
+    // Open register modal
+    function openRegisterModal() {
+      alert('Register functionality coming soon!');
+    }
+  </script>
+
+</body>
+</html>
